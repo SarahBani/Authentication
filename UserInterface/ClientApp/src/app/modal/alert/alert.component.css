@@ -1,0 +1,10 @@
+.alert {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid #000;
+  z-index: 1500;
+  transition: all 0.3s ease-out;
+  padding: 20px;
+}

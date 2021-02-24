@@ -1,0 +1,20 @@
+<div class="back-drop {{ (isLoading$ | async)?'not-clickable': '' }}" (click)="onCancel()">
+</div>
+
+<!-- Modal content-->
+<div class="modal-container">
+
+  <header>
+    <strong>{{ title }}</strong>
+    <button type="button" class="close" data-dismiss="modal" (click)="onCancel()"
+            [disabled]="(isLoading$ | async)">
+      &times;
+    </button>
+  </header>
+
+  <!--<ng-content>
+  </ng-content>-->
+  <ng-template #container>
+  </ng-template>
+
+</div>

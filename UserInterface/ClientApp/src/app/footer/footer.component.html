@@ -1,0 +1,38 @@
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-3 justify-content-center align-self-center text-right">
+        <img class="" src="images/logo.png">
+      </div>
+      <div class="col-offset-1 col-8 container-fluid text-left mt-3">
+        <div class="row">
+          <ul class="list-unstyled">
+            <li [routerLinkActive]="['link-active']"
+                [routerLinkActiveOptions]="{ exact: true }">
+              <a class="nav-link" [routerLink]="['/']">
+                <span class="fa fa-home"></span> Home
+              </a>
+            </li>
+            <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="hasLoggedIn$ | async">
+              <a class="nav-link" [routerLink]="['/profile']">
+                <span class="fa fa-list"></span> Profile
+              </a>
+            </li>
+            <li class="nav-item" [routerLinkActive]="['link-active']">
+              <a class="nav-link" [routerLink]="['/about']">
+                <span class="fa fa-info pl-1"></span> About
+              </a>
+
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-copyright text-center py-1">
+      © 2021 Copyright:
+      <em> Sarah Banieghbal</em>
+    </div>
+  </div>
+
+</footer>

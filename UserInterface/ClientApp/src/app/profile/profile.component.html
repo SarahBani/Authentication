@@ -1,0 +1,16 @@
+<ng-container *ngIf="profile$ | async as profile">
+  <div class="container">
+    <div class="row">
+      <div class="col-3 card bg-primary">
+        <div class="card-body">
+          <img src="/images/avatars/{{ profile.avatar }}"
+               alt="{{ profile.fullName }}" *ngIf="!!profile.avatar" />
+          </div>
+          <div class="card-body text-center">
+            <h4 class="card-title">{{ profile.fullName }}</h4>
+            <p class="card-text" *ngIf="!!profile.position">{{ profile.position }}</p>
+          </div>
+        </div>
+      </div>   
+  </div>
+</ng-container>

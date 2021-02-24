@@ -1,0 +1,8 @@
+<div class="alert alert-danger col-xs-10 col-md-5" *ngIf="(error$ | async)">
+  <div>
+    <button type="button" class="close" (click)="onClose()">
+      &times;
+    </button>
+    <div class="modal-alert-content">{{ error$ | async }}</div>
+  </div>
+</div>

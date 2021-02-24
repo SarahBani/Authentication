@@ -1,0 +1,21 @@
+<form [formGroup]="myFormGroup" (ngSubmit)="onLogin()">
+  <div class="form-group">
+    <label for="username">Username: </label>
+    <input type="text" id="username" formControlName="username" class="form-control" pattern="{{ regexPattern }}" />
+  </div>
+  <div class="form-group">
+    <label for="password">Password: </label>
+    <input type="password" id="password" formControlName="password" class="form-control" pattern="{{ regexPattern }}" />
+  </div>
+  <p [hidden]="isValid"
+     class="alert alert-danger">
+    Please enter valid values!
+  </p>
+  <div class="row">
+    <div class="col-12 text-right">
+      <button type="submit" class="btn btn-primary" [disabled]="!myFormGroup.valid || (isLoading$ | async)">Login</button>
+      <button type="button" class="btn btn-warning" (click)="onCancel()" [disabled]="(isLoading$ | async)">Cancel</button>
+    </div>
+  </div>
+
+</form>

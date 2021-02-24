@@ -1,0 +1,10 @@
+div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 70vh;
+  padding-bottom: 210px;
+  font-size: 30px;
+}
