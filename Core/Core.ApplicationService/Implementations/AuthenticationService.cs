@@ -70,6 +70,7 @@ namespace Core.ApplicationService.Implementations
 
         public async Task<TransactionResult> LogoutAsync()
         {
+            await Task.Delay(3000);
             await this._tokenManagerService.DeactivateCurrentAsync();
             return new TransactionResult();
         }

@@ -15,9 +15,8 @@ export class AuthService extends RestService {
   private logoutUrl: string = '/auth/logout';
   private getProfileUrl: string = '/auth/getprofile';
 
-  constructor(httpClient: HttpClient,
-     tokenService: TokenService) {
-    super(httpClient, tokenService)
+  constructor(httpClient: HttpClient) {
+    super(httpClient)
   }
 
   public login(data: ILogin): Observable<ITransactionResult> {
@@ -25,11 +24,11 @@ export class AuthService extends RestService {
   }
 
   public getProfile(): Observable<IProfile> {
-    return super.httpGet<IProfile>(this.getProfileUrl, true);
+    return super.httpGet<IProfile>(this.getProfileUrl);
   }
 
   public logout(): Observable<ITransactionResult> {
-    return super.httpGet<ITransactionResult>(this.logoutUrl, true);
+    return super.httpGet<ITransactionResult>(this.logoutUrl);
   }
 
 }

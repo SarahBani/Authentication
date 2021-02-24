@@ -22,6 +22,7 @@ import { appEffects } from './store/app.effects';
 import { LoginComponent } from './login/login.component';
 import { AlertComponent } from './modal/alert/alert.component';
 import { ModalContainerComponent } from './modal/modal-container/modal-container.component';
+import { JWTInterceptorService } from './services/jwt-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -49,11 +50,11 @@ import { ModalContainerComponent } from './modal/modal-container/modal-container
     StoreRouterConnectingModule.forRoot(),
   ],
   providers: [
-    //{
-    //  provide: HTTP_INTERCEPTORS,
-    //  useClass: AuthInterceptorService,
-    //  multi: true
-    //}
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JWTInterceptorService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
