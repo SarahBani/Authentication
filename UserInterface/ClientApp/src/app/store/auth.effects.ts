@@ -25,6 +25,27 @@ export class AuthEffects {
   private internalServerErrorMessage: string = 'An internal server error has occured!';
   private tokenExpirationTimer: any;
 
+  @Effect()
+  autoLogin$: Observable<Action> = this.actions$.pipe(
+    ofType(AuthActions.autoLogin),
+    switchMap((action) => {
+      const authToken: IAuthToken = this.tokenService.getAuthToken();
+      let loggedIn: boolean = false;
+      if (authToken) {
+        if (this.isTokenExpired(authToken)) {
+          this.tokenService.deleteAuthToken();
+        }
+        else {
+          loggedIn = true;
+          this.autoLogout(authToken.tokenExpiration);
+        }
+      }
+      return of(AuthActions.autoLoginChecked({
+        hasLoggedIn: loggedIn
+      }));
+    })
+  );
+
   @Effect({ dispatch: false })
   displayLoginModal$: Observable<Action> = this.actions$.pipe(
     ofType(AuthActions.displayLoginModal),
@@ -77,6 +98,7 @@ export class AuthEffects {
     ofType(AuthActions.loginSucceed),
     tap((action) => {
       this.tokenService.setAuthToken(action.authToken);
+      this.autoLogout(action.authToken.tokenExpiration);
     }),
     tap((action) => {
       this.modalService.close();
@@ -112,18 +134,13 @@ export class AuthEffects {
   logout$: Observable<Action> = this.actions$.pipe(
     ofType(AuthActions.logout),
     switchMap((action) => {
-      const authResponse: IAuthToken = this.tokenService.getAuthToken();
-      if (!authResponse) {
-        return of(AuthActions.loginFailed({
-          error: this.getError(this.errorMessage)
-        }));
+      const authToken: IAuthToken = this.tokenService.getAuthToken();
+      if (!authToken) {
+        return of(AuthActions.logoutSucceed());
       }
-      if (authResponse.tokenExpiration < new Date()) {
-        console.log(111);
+      if (this.isTokenExpired(authToken)) {
         this.tokenService.deleteAuthToken();
-        return of(AuthActions.loginFailed({
-          error: this.getError(this.errorMessage)
-        }));
+        return of(AuthActions.logoutSucceed());
       }
 
       return this.authService.logout().pipe(
@@ -155,6 +172,10 @@ export class AuthEffects {
   logoutSucceed$: Observable<Action> = this.actions$.pipe(
     ofType(AuthActions.logoutSucceed),
     tap((action) => {
+      if (this.tokenExpirationTimer) {
+        clearTimeout(this.tokenExpirationTimer);
+      }
+      this.tokenExpirationTimer = null;
       this.tokenService.deleteAuthToken();
       this.router.navigate(['/']);
     })
@@ -188,26 +209,16 @@ export class AuthEffects {
     return this.errorMessage;
   }
 
-  //public autoLogin() {
-  //  let authResponse: IAuthToken= this.tokenService.getToken();
-  //  if (!authResponse) {
-  //    return;
-  //  }
-  //  if (authResponse.token) {
-  //    this.userChanged.next(authResponse);
-  //    this.autoLogout(authResponse.expirationDuration);
-  //  }
-  //  else {
-  //    this.tokenService.deleteToken();
-  //  }
-  //}
+  private isTokenExpired(authToken: IAuthToken): boolean {
+    return (new Date(authToken.tokenExpiration) < new Date())
+  }
 
-  //public autoLogout(tokenExpirationDuration: number) {
-  //  this.tokenExpirationTimer = setTimeout(() => {
-  //    this.logout$();
-  //  }, tokenExpirationDuration);
-  //}
-
-
+  private autoLogout(tokenExpirationDate: Date): void {
+    var duration = new Date(tokenExpirationDate).getTime() - new Date().getTime();
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.tokenService.deleteAuthToken();
+      this.store$.dispatch(AuthActions.logoutSucceed());
+    }, duration);
+  }
 
 }

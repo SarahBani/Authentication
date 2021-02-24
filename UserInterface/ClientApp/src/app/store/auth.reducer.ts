@@ -36,6 +36,18 @@ export const authReducer = createReducer(
       ...state,
       error: null,
     })),
+  on(AuthActions.autoLogin, (state: State) =>
+    ({
+      ...state,
+      isLoading: true,
+    })),
+  on(AuthActions.autoLoginChecked, (state: State, action) =>
+    ({
+      ...state,
+      isLoading: false,
+      hasLoggedIn: action.hasLoggedIn,
+    }))
+  ,
   on(AuthActions.displayLoginModal, (state: State) =>
     ({
       ...state,

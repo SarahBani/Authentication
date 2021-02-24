@@ -9,6 +9,11 @@ export const errorRaised = createAction('[Auth] Error Raised',
 
 export const clearError = createAction('[Auth] Clear Error');
 
+export const autoLogin = createAction('[Auth] Auto Login');
+
+export const autoLoginChecked = createAction('[Auth] Auto Login Checked',
+  props<{ hasLoggedIn: boolean}>());
+
 export const displayLoginModal = createAction('[Auth] Display Login Modal');
 
 export const hideLoginModal = createAction('[Auth] Hide Login Modal');

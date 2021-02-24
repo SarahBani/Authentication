@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.logoutSucceed = exports.logoutFailed = exports.logout = exports.getProfileSucceed = exports.getProfileFailed = exports.getProfile = exports.loginSucceed = exports.loginFailed = exports.login = exports.hideLoginModal = exports.displayLoginModal = exports.clearError = exports.errorRaised = void 0;
+exports.logoutSucceed = exports.logoutFailed = exports.logout = exports.getProfileSucceed = exports.getProfileFailed = exports.getProfile = exports.loginSucceed = exports.loginFailed = exports.login = exports.hideLoginModal = exports.displayLoginModal = exports.autoLoginChecked = exports.autoLogin = exports.clearError = exports.errorRaised = void 0;
 var store_1 = require("@ngrx/store");
 exports.errorRaised = store_1.createAction('[Auth] Error Raised', store_1.props());
 exports.clearError = store_1.createAction('[Auth] Clear Error');
+exports.autoLogin = store_1.createAction('[Auth] Auto Login');
+exports.autoLoginChecked = store_1.createAction('[Auth] Auto Login Checked', store_1.props());
 exports.displayLoginModal = store_1.createAction('[Auth] Display Login Modal');
 exports.hideLoginModal = store_1.createAction('[Auth] Hide Login Modal');
 exports.login = store_1.createAction('[Auth] Login', store_1.props());

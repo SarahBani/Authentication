@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import * as fromApp from './store/app.reducer';
+import * as AuthActions from './store/auth.actions';
 import { selectIsLoading, selectIsLoginModalOpened } from './store/auth.selector';
 
 @Component({
@@ -15,6 +16,7 @@ export class AppComponent {
   isLoginModalOpened$: Observable<boolean> = this.store.select(selectIsLoginModalOpened);
 
   constructor(private store: Store<fromApp.AppState>) {
+    this.store.dispatch(AuthActions.autoLogin());
   }
 
 }
