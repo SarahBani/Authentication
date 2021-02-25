@@ -8,7 +8,8 @@ export class ModalService {
 
   private config = {
     backdrop: true,
-    ignoreBackdropClick: true
+    ignoreBackdropClick: true,
+    keyboard: false, // prevent Esc key from closing the modal especially while loading
     //  class: 'modal-lg'
   };
 
